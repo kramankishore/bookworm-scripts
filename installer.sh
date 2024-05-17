@@ -4,7 +4,9 @@
 # Install packages after installing base Debian with no GUI
 
 # xorg display server installation
-sudo apt install -y xorg xserver-xorg xbacklight xbindkeys xvkbd xinput
+# sudo apt install -y xorg xserver-xorg xbacklight xbindkeys xvkbd xinput
+# Below command works for debian 12.5. Else, I was facing Xorg issues.
+sudo apt install -y xserver-xorg-core xserver-xorg-video-amdgpu xinit xinput x11-xserver-utils
 
 # PACKAGE INCLUDES build-essential.
 sudo apt install -y build-essential
@@ -14,7 +16,7 @@ xdg-user-dirs-update
 mkdir ~/Screenshots/
 
 # PICK YOUR X11 Window Managers (Uncomment if you want these installed)
-# bash ~/bookworm-scripts/resources/bspwm-commands
+bash ~/bookworm-scripts/resources/bspwm-commands
 # bash ~/bookworm-scripts/resources/dk-commands
 # bash ~/bookworm-scripts/resources/dwm-commands
 # bash ~/bookworm-scripts/resources/qtile-commands
@@ -47,8 +49,10 @@ sudo apt install -y neofetch
 # Installation for Appearance management
 sudo apt install -y lxappearance 
 
-# Browser Installation (eg. chromium)
+# Browser Installation - Firefox & Chrome
 sudo apt install -y firefox-esr 
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo apt install ./google-chrome-stable_current_amd64.deb
 
 # Desktop background browser/handler 
 # feh --bg-fill /path/to/directory 
@@ -81,22 +85,18 @@ sudo apt install -y picom rofi dunst libnotify-bin unzip wmctrl xdotool libnotif
 # sudo apt install -y mousepad ghostwriter
 # sudo apt install -y l3afpad
 
-# My Favorites
-# Multimedia/GFX
-sudo apt install -y mpv qimgv scrot gimp obs-studio mkvtoolnix-gui redshift eog brightnessctl
-
 # PDF 
-sudo apt install -y  evince pdfarranger
+# sudo apt install -y  evince pdfarranger
 
 # Others
-sudo apt install -y numlockx figlet galculator cpu-x udns-utils whois curl tree
+# sudo apt install -y numlockx figlet galculator cpu-x udns-utils whois curl tree
 
 # Install Lightdm Console Display Manager
-# sudo apt install -y lightdm lightdm-gtk-greeter-settings
-# sudo systemctl enable lightdm
+sudo apt install -y lightdm lightdm-gtk-greeter-settings
+sudo systemctl enable lightdm
 
 # Install the Ly Console Display Manager
-bash ~/bookworm-scripts/ly.sh
+# bash ~/bookworm-scripts/ly.sh
 
 
 ########################################################
