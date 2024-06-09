@@ -95,6 +95,10 @@ sudo apt install -y picom rofi dunst libnotify-bin unzip wmctrl xdotool libnotif
 sudo apt install -y lightdm lightdm-gtk-greeter-settings
 sudo systemctl enable lightdm
 
+# Betterlockscreen
+# Check link below and install it
+# https://github.com/betterlockscreen/betterlockscreen
+
 # Install the Ly Console Display Manager
 # bash ~/bookworm-scripts/ly.sh
 
