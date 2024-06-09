@@ -183,6 +183,15 @@ sudo systemctl restart wpa_supplicant.service
 sudo systemctl restart wpa_supplicant
 ```
 
+#### rofi-network-manager
+Also, this whole installation adds a script called ~/bin/rofi-network-manager
+This can be triggered with the shortcut
+```
+super + n
+```
+
+This is rofi style network manager (works on top on NetworkManager)
+
 
 # bookworm-scripts
 
