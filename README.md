@@ -22,7 +22,62 @@ sudo dpkg-reconfigure console-setup
 
 Select the exisiting options (like UTF-8 -> Latin1 and Latin5 (default option) -> Then select Terminus -> Then select the last or last second font size
 
-### Step 4: Install git, micro, zram-tools & configure zram
+### Step 4: Add non-free and contrib to sources list
+```
+sudo micro /etc/apt/sources.list
+```
+
+Add 'non-free contrib' to all lines. So this changed the sources.list file from:
+```
+#deb cdrom:[Debian GNU/Linux 12.5.0 _Bookworm_ - Official amd64 NETINST with firmware 20240210-11:27]/ bookworm contrib main non-free-firmware
+
+deb http://deb.debian.org/debian/ bookworm main non-free-firmware
+deb-src http://deb.debian.org/debian/ bookworm main non-free-firmware
+
+deb http://security.debian.org/debian-security bookworm-security main non-free-firmware
+deb-src http://security.debian.org/debian-security bookworm-security main non-free-firmware
+
+# bookworm-updates, to get updates before a point release is made;
+# see https://www.debian.org/doc/manuals/debian-reference/ch02.en.html#_updates_and_backports
+deb http://deb.debian.org/debian/ bookworm-updates main non-free-firmware
+deb-src http://deb.debian.org/debian/ bookworm-updates main non-free-firmware
+
+# This system was installed using small removable media
+# (e.g. netinst, live or single CD). The matching "deb cdrom"
+# entries were disabled at the end of the installation process.
+# For information about how to configure apt package sources,
+# see the sources.list(5) manual.
+```
+
+And changed it to the following by adding 'non-free contrib':
+```
+#deb cdrom:[Debian GNU/Linux 12.5.0 _Bookworm_ - Official amd64 NETINST with firmware 20240210-11:27]/ bookworm contrib main non-free-firmware
+
+deb http://deb.debian.org/debian/ bookworm main non-free-firmware non-free contrib
+deb-src http://deb.debian.org/debian/ bookworm main non-free-firmware non-free contrib
+
+deb http://security.debian.org/debian-security bookworm-security main non-free-firmware non-free contrib
+deb-src http://security.debian.org/debian-security bookworm-security main non-free-firmware non-free contrib
+
+# bookworm-updates, to get updates before a point release is made;
+# see https://www.debian.org/doc/manuals/debian-reference/ch02.en.html#_updates_and_backports
+deb http://deb.debian.org/debian/ bookworm-updates main non-free-firmware non-free contrib
+deb-src http://deb.debian.org/debian/ bookworm-updates main non-free-firmware non-free contrib
+
+# This system was installed using small removable media
+# (e.g. netinst, live or single CD). The matching "deb cdrom"
+# entries were disabled at the end of the installation process.
+# For information about how to configure apt package sources,
+# see the sources.list(5) manual.
+```
+
+And then:
+```
+sudo apt update
+sudo apt upgrade
+```
+
+### Step 5: Install git, micro, zram-tools & configure zram
 ```
 sudo apt install git micro zram-tools
 sudo micro /etc/default/zramswap
@@ -42,7 +97,7 @@ Restart zramswap.service
 sudo systemctl restart zramswap.service
 ```
 
-### Step 5: Install bspwm and personalise it
+### Step 6: Install bspwm and personalise it
 ```
 git clone https://github.com/kramankishore/bookworm-scripts
 cd bookworm-scripts
@@ -54,7 +109,7 @@ cd bookworm-scripts
 Then reboot
 Upon reboot, you should see the lightdm login manager. On top right you can change from default option to bspwm before logging in.
 
-### Step 6: Network Manager configuration
+### Step 7: Network Manager configuration
 I am still not sure how this worked! It somehow worked after so many attempts.
 network-manager & network-manager-gnome should be installed with the above scripts.
 nm-applet command should add the applet icon in top right of polybar (this should be seen by default).
@@ -93,12 +148,40 @@ Then rebooted the machine:
 sudo reboot
 ```
 
+Also, installed this (not sure how much it helped):
+```
+sudo apt-get install firmware-iwlwifi
+```
+
+
 After that, on checking with the command 'nmcli dev', the status of wifi device changed from 'unmanaged' to 'unavailable'
 I was unable to solve this problem for a long time. No matter what I did, 'unavailable' was not changing to available.
 And because of this, in the top right icon in polybar (nm-applet), I was not able to see any wifi options and unable to connect to wifi.
 
 However, after a shutdown, it started working finally! Not sure how. Finally, if I click the top right icon, wifi was available and I was able to scan the existing networks and connect to my wifi.
-It may be possible that I pressed random buttons on keyboard and enabled wifi via some hotkey? Not sure!
+Even after this, it did not work reliably. It used to work few times and then not work few other times and I had to keep rebooting.
+
+On digging deeper, I realised I can check NetworkManager errors by journalctl command:
+Ref: https://forum.manjaro.org/t/wifi-connection-shows-device-not-ready-tried-everything-please-help/117957/3
+
+```
+sudo journalctl --boot 0 --unit NetworkManager --no-pager
+```
+
+On checking this, I saw the error:
+```
+Jun 10 02:10:30 raman-gc NetworkManager[813]: <error> [1717965630.8922] device (wlp3s0): Couldn't initialize supplicant interface: GDBus.Error:fi.w1.wpa_supplicant1.UnknownError: wpa_supplicant couldn't grab this interface.
+Jun 10 02:10:30 raman-gc NetworkManager[813]: <info>  [1717965630.8923] device (wlp3s0): supplicant interface keeps failing, giving up
+```
+
+On googling this error, I landed on this - Ref: https://forums.debian.net/viewtopic.php?p=751848#p751848
+From this, I realised that the following commands can make it work:
+```
+sudo systemctl unmask wpa_supplicant.service
+sudo systemctl restart NetworkManager
+sudo systemctl restart wpa_supplicant.service
+sudo systemctl restart wpa_supplicant
+```
 
 
 # bookworm-scripts
