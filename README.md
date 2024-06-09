@@ -1,3 +1,106 @@
+# Notes by Raman
+I have updated the scripts to keep only bspwm (& related) installation.
+To install this whole thing, the steps are:
+
+### Step 1: Download debian 12.5 ISO file (debian-12.5.0-amd64-netinst.iso)
+Currently, I can see the download link at https://www.debian.org/download
+
+### Step 2: Make a bootable USB drive with this ISO file
+```
+sudo dd if=/path/to/iso of=/usb/drive/path bs=1M status=progress
+```
+
+The usb drive path is usually something like /dev/sdb. Plug in the usb drive and use the command lsblk to check this.
+Sometimes you might have to umount (unmount) the usb drive before writing the iso file to it. Google if you face issues.
+
+Once installation is done, you can boot into debian.
+
+### Step 3 (Optional): Configure the terminal to make it look bigger
+```
+sudo dpkg-reconfigure console-setup
+```
+
+Select the exisiting options (like UTF-8 -> Latin1 and Latin5 (default option) -> Then select Terminus -> Then select the last or last second font size
+
+### Step 4: Install git, micro, zram-tools & configure zram
+```
+sudo apt install git micro zram-tools
+sudo micro /etc/default/zramswap
+```
+
+Uncomment the below two lines & save the file:
+```
+ALGO=lz4
+PERCENT=50
+```
+
+You can change the percent to 25 as well
+
+Restart zramswap.service
+
+```
+sudo systemctl restart zramswap.service
+```
+
+### Step 5: Install bspwm and personalise it
+```
+git clone https://github.com/kramankishore/bookworm-scripts
+cd bookworm-scripts
+./installer.sh
+./custom.sh
+./teal.sh
+```
+
+Then reboot
+Upon reboot, you should see the lightdm login manager. On top right you can change from default option to bspwm before logging in.
+
+### Step 6: Network Manager configuration
+I am still not sure how this worked! It somehow worked after so many attempts.
+network-manager & network-manager-gnome should be installed with the above scripts.
+nm-applet command should add the applet icon in top right of polybar (this should be seen by default).
+On checking the status with the command 'nmcli dev', I was seeing the wifi in 'unmanaged' state.
+I updated NetworkManager.conf
+
+```
+sudo micro /etc/NetworkManager/NetworkManager.conf
+```
+
+Changed the text of the file from:
+```
+[main]
+plugins=ifupdown,keyfile
+
+[ifupdown]
+managed=false
+```
+
+to:
+```
+[main]
+plugins=ifupdown,keyfile
+
+[ifupdown]
+managed=true
+```
+
+And restarted the network manager by running the command:
+```
+sudo systemctl restart NetworkManager
+```
+
+Then rebooted the machine:
+```
+sudo reboot
+```
+
+After that, on checking with the command 'nmcli dev', the status of wifi device changed from 'unmanaged' to 'unavailable'
+I was unable to solve this problem for a long time. No matter what I did, 'unavailable' was not changing to available.
+And because of this, in the top right icon in polybar (nm-applet), I was not able to see any wifi options and unable to connect to wifi.
+
+However, after a shutdown, it started working finally! Not sure how. Finally, if I click the top right icon, wifi was available and I was able to scan the existing networks and connect to my wifi.
+It may be possible that I pressed random buttons on keyboard and enabled wifi via some hotkey? Not sure!
+
+
 # bookworm-scripts
 
 ### installer.sh
