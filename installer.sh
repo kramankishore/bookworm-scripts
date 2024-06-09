@@ -6,7 +6,7 @@
 # xorg display server installation
 # sudo apt install -y xorg xserver-xorg xbacklight xbindkeys xvkbd xinput
 # Below command works for debian 12.5. Else, I was facing Xorg issues.
-sudo apt install -y xserver-xorg-core xserver-xorg-video-amdgpu xinit xinput x11-xserver-utils x11-utils
+sudo apt install -y xorg xserver-xorg-core xserver-xorg-video-amdgpu xinit xinput x11-xserver-utils x11-utils xbacklight xbindkeys xvkbd
 
 # PACKAGE INCLUDES build-essential.
 sudo apt install -y build-essential
