@@ -216,6 +216,7 @@ Once Todoist is integrated, you should be able to launch it from rofi.
 
 ### Step 9: Activate tap to click on touchpad
 Ref: https://unix.stackexchange.com/a/337218
+
 Remove the package - `xserver-xorg-input-synaptics`
 ```
 sudo apt remove xserver-xorg-input-synaptics
