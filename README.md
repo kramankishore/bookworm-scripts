@@ -214,6 +214,44 @@ ail-cli integrate <path to todoist appimage file>
 
 Once Todoist is integrated, you should be able to launch it from rofi.
 
+### Step 9: Activate tap to click on touchpad
+Ref: https://unix.stackexchange.com/a/337218
+Remove the package - `xserver-xorg-input-synaptics`
+```
+sudo apt remove xserver-xorg-input-synaptics
+```
+
+Install `xserver-xorg-input-libinput`
+```
+sudo apt install xserver-xorg-input-libinput
+```
+
+Create directory /etc/X11/xorg.conf.d
+```
+mkdir /etc/X11/xorg.conf.d
+```
+
+For me the above 3 commands did not make any change since synaptics package was already not present, libinput package was already present and `/etc/X11/xorg.conf.d` directory was already present too.
+
+Then, create the file:
+sudo micro /etc/X11/xorg.conf.d/40-libinput.conf
+
+And all the following content in the file:
+```
+Section "InputClass"
+        Identifier "libinput touchpad catchall"
+        MatchIsTouchpad "on"
+        MatchDevicePath "/dev/input/event*"
+        Driver "libinput"
+        Option "Tapping" "on"
+EndSection
+```
+
+Then, restart the login manager:
+```
+sudo systemctl restart lightdm
+```
+
 
 ## End of Raman's notes
 
