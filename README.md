@@ -23,6 +23,7 @@ sudo dpkg-reconfigure console-setup
 Select the exisiting options (like UTF-8 -> Latin1 and Latin5 (default option) -> Then select Terminus -> Then select the last or last second font size
 
 ### Step 4: Add non-free and contrib to sources list
+
 ```
 sudo micro /etc/apt/sources.list
 ```
@@ -192,6 +193,7 @@ super + n
 
 This is rofi style network manager (works on top on NetworkManager)
 
+## End of Raman's notes
 
 # bookworm-scripts
 
