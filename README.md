@@ -193,6 +193,28 @@ super + n
 
 This is rofi style network manager (works on top on NetworkManager)
 
+### Step 8: Install Slack & Todoist
+Slack:
+Ref: https://slack.com/intl/en-in/downloads/linux
+Don't download from the snap store
+Check if there is a .deb app link
+
+Todoist:
+For todoist, I have installed using AppImageLauncher.
+Go to - https://todoist.com/downloads/linux
+and click "Go here for instructions"
+
+First, install appimagelauncher. Ref: https://github.com/TheAssassin/AppImageLauncher/releases
+I tried appimagelauncher lite first but it did not work. Then I installed the full version and it worked.
+
+After installing appimagelauncher, you will have access to ail-cli command. Then, download Todoist's appimage file & run:
+```
+ail-cli integrate <path to todoist appimage file>
+```
+
+Once Todoist is integrated, you should be able to launch it from rofi.
+
+
 ## End of Raman's notes
 
 # bookworm-scripts
