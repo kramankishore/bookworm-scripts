@@ -68,12 +68,13 @@ sudo apt install -y fonts-recommended fonts-ubuntu fonts-font-awesome fonts-term
 sudo apt install -y exa
 
 
-# Printing and bluetooth (if needed)
+# Printing
 # sudo apt install -y cups system-config-printer simple-scan
-# sudo apt install -y bluez blueman
-
 # sudo systemctl enable cups
-# sudo systemctl enable bluetooth
+
+# Bluetooth
+sudo apt install -y bluez blueman
+sudo systemctl enable bluetooth
 
 # Packages needed for window manager installation
 sudo apt install -y picom rofi dunst libnotify-bin unzip wmctrl xdotool libnotify-dev
