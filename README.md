@@ -234,7 +234,9 @@ mkdir /etc/X11/xorg.conf.d
 For me the above 3 commands did not make any change since synaptics package was already not present, libinput package was already present and `/etc/X11/xorg.conf.d` directory was already present too.
 
 Then, create the file:
+```
 sudo micro /etc/X11/xorg.conf.d/40-libinput.conf
+```
 
 And all the following content in the file:
 ```
