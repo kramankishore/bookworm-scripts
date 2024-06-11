@@ -254,7 +254,9 @@ Then, restart the login manager:
 ```
 sudo systemctl restart lightdm
 ```
-
+### Step 10: Install Betterlockscreen
+Reference: https://github.com/betterlockscreen/betterlockscreen
+Install the dependencies first - i3lock-color & ImageMagick
 
 ## End of Raman's notes
 
