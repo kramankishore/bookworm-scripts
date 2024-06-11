@@ -94,7 +94,7 @@ sudo apt install -y picom rofi dunst libnotify-bin unzip wmctrl xdotool libnotif
 sudo apt install -y galculator whois curl tree
 
 # Screenshots - Flameshot
-sudo apt install flameshot
+sudo apt install -y flameshot
 
 # Install Lightdm Console Display Manager
 sudo apt install -y lightdm lightdm-gtk-greeter-settings
