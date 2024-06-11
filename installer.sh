@@ -91,7 +91,7 @@ sudo apt install -y picom rofi dunst libnotify-bin unzip wmctrl xdotool libnotif
 
 # Others
 # sudo apt install -y numlockx figlet galculator cpu-x udns-utils whois curl tree
-sudo apt install -y gcalculator whois curl tree
+sudo apt install -y galculator whois curl tree
 
 # Screenshots - Flameshot
 sudo apt install flameshot
